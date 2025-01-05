@@ -4,9 +4,9 @@ Welcome to my cybersecurity documentation journey! I'm Lior, a beginner diving i
 
 ## 📖 Contents
 - [Introduction](docs/Introduction.md)
-- [Learning Goals](#learning-goals)
-- [Projects](#projects)
-- [Tools](#tools)
+- [Learning Goals](docs/Learning_Goals.md)
+- [Projects](docs/Projects.md)
+- [Tools](docs/Tools.md)
 
 ## 📌 Current Focus
 - Learning networking basics.
