@@ -3,7 +3,7 @@
 Welcome to my cybersecurity documentation journey! I'm Lior, a beginner diving into the world of cybersecurity. This repository will track my progress, projects, and lessons learned.
 
 ## 📖 Contents
-- [Introduction](docs/introduction)
+- [Introduction](/docs/introduction.md)
 - [Learning Goals](#learning-goals)
 - [Projects](#projects)
 - [Tools](#tools)
