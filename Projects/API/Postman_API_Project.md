@@ -9,7 +9,7 @@ The API supports network diagnostic tools like:
 Notes regarding API Keys used in this project:
 - The user must first generate an API-Key and include it in the x-api-key header of the request to access the API endpoints.
 - API keys will be hashed (SHA256) and then stored server side to enhance key security.
-- To better demonstrate expiration of keys, the server will save only the last key generated as "active" and will de-activated all previous generated keys. I've gone with this route of key expiration because this is a single user API demo and it enables more "comfy" testing instead of having a static expiration timer.
+- To better demonstrate key expiration, the server saves only the last key generated as "active" and deactivates all previously generated keys. I've gone with this route of key expiration because this is a single user API demo and it enables more "comfy" testing instead of having a static expiration timer.
 
 ---
 
@@ -53,11 +53,11 @@ Notes regarding API Keys used in this project:
 
 ## 3. API Endpoints
 
-API will be hosted at http://127.0.0.1:5000/ENDPOINTs
+API will be hosted at http://127.0.0.1:5000
 
 General Errors:
-- **405 Method Not Allowed:** The Method is not allowed for the requsted URL.
-- **404 Not Found:** The Requested URL was not found on the server. 
+- **405 Method Not Allowed:** The method is not allowed for the requsted URL.
+- **404 Not Found:** The requested URL was not found on the server. 
 - **401 Unauthorized:** If the API key is missing or invalid.
 - **400 Bad Request:** If the domain field is missing in the request body.
 - **500 Internal Server Error:** If the domain cannot be resolved.
@@ -97,7 +97,7 @@ General Errors:
 ### Traceroute - `/api/traceroute`
 
 - **Method:** `POST`
-- **Description:** Performs tracert to test hops to the target.
+- **Description:** Performs traceroute to test hops to the target.
 - **Headers:** x-api-key - Your API Key here.
 - **Request Body:** 
   ```json
@@ -130,7 +130,7 @@ General Errors:
   "target": "www.google.com"
   }
 
-### Key Logs - `/api/logs` - **This endpoint is intentionally vulnerable and will reveal the logged keys without authenticating the user, I'm planning to try Pass-The-Hash attack on an API in the future**.
+### Key Logs - `/api/logs` - **This endpoint is intentionally vulnerable and reveals logged keys without authenticating the user to test possible API attacks in the future.**.
 
 - **Method:** `GET`
 - **Description:** Provides detailed logs of previously created keys.
@@ -139,26 +139,45 @@ General Errors:
 - **Response:**
   ```json
   [
-  {
-    "api_key_hashed": "8e255e822c183f318ecea54eda57158ab01d86b10fecdf7c8a61fdf59bda7c34",
-    "created_at": "2025-01-04 18:06:38.243613",
-    "id": 1,
-    "status": "inactive"
-  },
-  .
-  .
-  .
-  .
-  
-  {
-    "api_key_hashed": "b43af87776d020bedc3d3d58b0ab14a9662083cc0ca4dcbd3275e9be903b3bc4",
-    "created_at": "2025-01-06 00:40:29.403366",
-    "id": 18,
-    "status": "active"
-  }
+    {
+        "api_key_hashed": "2286759824fa2972a9ef997525f373bdae488b9c68a81541f32fc4771dc16a71",
+        "created_at": "2025-01-06 18:19:13.991751",
+        "id": 1,
+        "status": "inactive"
+    },
+    {
+        "api_key_hashed": "e2c516d0ba2cebde56aaaaceff69e8d7ef8a5b846f6f95e5275182553bf2f50c",
+        "created_at": "2025-01-06 18:49:04.072324",
+        "id": 2,
+        "status": "active"
+    }
   ]
-  
+
+---
+
+## 4. Testing with Postman
+
+!Access Postman via the Desktop Agent!
+
+To start testing with Postman we first need to generate a valid key that will grant us access to the other endpoints.
+
+To generate the API-Key complete the following steps:
+
+1. Open Postman Desktop Agent.
+2. Select the method for the request, in this case `POST`.
+3. Set the URL of the request to http://127.0.0.1:5000/api/key.
+4. click "Send"
+5. Observe the Body in the response and copy the generated api_key.
+
+![image](https://github.com/user-attachments/assets/7881cc03-f2e9-4152-8ac0-00a90f36557e)
+
+6. Refer to [API Endpoints](#3-api-endpoints) to check the settings required for each endpoint.
+7. Click the Headers tab.
+8. Add x-api-key in the Key column and your generated key in the Value column.
+![image](https://github.com/user-attachments/assets/deee6232-b6d1-4850-88ba-bde3209479d6)
 
 
-
-
+9. Make sure the header is enabled - Check the box next to the new header.
+10. Set the Method and URI according to the API endpoint you want to use.
+11. Depending on the endpoint used, you might need to include JSON data in the request body.
+12. Observe the response Body for the returned data based on the call parameters.
